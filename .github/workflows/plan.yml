@@ -8,24 +8,20 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: development
     steps:
     - uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: '${{ secrets.AWS_REGION }}'
-        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME }}'
+        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions-readonly'
     - run: aws sts get-caller-identity
   production:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: production
     steps:
     - uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: '${{ secrets.AWS_REGION }}'
-        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME }}'
+        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions-administrator'
     - run: aws sts get-caller-identity
